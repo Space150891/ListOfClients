@@ -1,0 +1,307 @@
+{
+	"info": {
+		"_postman_id": "1ced606f-1f96-458a-aa2c-84f871e35db2",
+		"name": "UsersProviders",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "createwClient",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"Client to delete\",\n\t\"email\": \"test1@gmail.com\",\n\t\"phone\":\"1234567890\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:4000/clients",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"clients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createProvider",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"Provider1\"\n\n}"
+				},
+				"url": {
+					"raw": "http://localhost:4000/providers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"providers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateClient",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"providers\":\"5d0b5b09178b3c293b146214\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:4000/clients/5d0b5c5549c4372a69c3ac45",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"clients",
+						"5d0b5c5549c4372a69c3ac45"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateProvider",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"TESTOK\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:4000/providers/5d0b5b09178b3c293b146214",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"providers",
+						"5d0b5b09178b3c293b146214"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteClient",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"TESTOK\",\n\t\"providers\":\"5d0b4d323180a40e6e22f911\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:4000/clients/5d0b5728637c112296c5ae29",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"clients",
+						"5d0b5728637c112296c5ae29"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteProvider",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"TESTOK\",\n\t\"providers\":\"5d0b4d323180a40e6e22f911\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:4000/providers/5d0b5bcc49c4372a69c3ac43",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"providers",
+						"5d0b5bcc49c4372a69c3ac43"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getClient",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"TESTOK\",\n\t\"providers\":\"5d0b4d323180a40e6e22f911\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:4000/clients/5d0b5c5549c4372a69c3ac45",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"clients",
+						"5d0b5c5549c4372a69c3ac45"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getProvider",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"TESTOK\",\n\t\"providers\":\"5d0b4d323180a40e6e22f911\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:4000/providers/5d0b5b09178b3c293b146214",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"providers",
+						"5d0b5b09178b3c293b146214"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllClients",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:4000/clients",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"clients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllProviders",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:4000/providers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"providers"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
