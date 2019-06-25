@@ -1,0 +1,323 @@
+{
+  "swagger": "2.0",
+
+  "info": {
+    "version": "1.0.0",
+    "title": "Clients Providers Test",
+    "description": "for your needs",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+
+  "host": "localhost:4000",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "Providers",
+      "description": "API for providers in the system"
+    },
+    {
+      "name": "Clients",
+      "description": "API for clients in the system"
+    }
+
+  ],
+
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+
+
+  "paths": {
+
+    "/providers": {
+
+      "get": {
+        "tags": [
+          "Providers"
+        ],
+        "summary": "Get all provider in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Provider"
+            }
+          }
+        }
+      },
+
+      "post": {
+        "tags": [
+          "Providers"
+        ],
+        "description": "Create new provider in system",
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "body",
+            "description": "Provider that we want to create",
+            "schema": {
+              "$ref": "#/definitions/Provider"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "New provider is created",
+            "schema": {
+              "$ref": "#/definitions/Provider"
+            }
+          }
+        }
+      }
+
+    },
+
+    "/providers/{providerId}": {
+
+      "parameters": [
+        {
+          "name": "providerId",
+          "in": "path",
+          "required": true,
+          "description": "ID of provider that we want to find",
+          "type": "string"
+        }
+      ],
+
+      "get": {
+        "tags": [
+          "Providers"
+        ],
+        "summary": "Get provider with given ID",
+        "responses": {
+          "200": {
+            "description": "Provider is found",
+            "schema": {
+              "$ref": "#/definitions/Provider"
+            }
+          }
+        }
+      },
+
+      "put": {
+        "summary": "Update provider with give ID",
+        "tags": [
+          "Providers"
+        ],
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "body",
+            "description": "Provider with new values of properties",
+            "schema": {
+              "$ref": "#/definitions/Provider"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Provider is updated",
+            "schema": {
+              "$ref": "#/definitions/Provider"
+            }
+          }
+        }
+      },
+
+      "delete": {
+        "summary": "Delete provider with given ID",
+        "tags": [
+          "Providers"
+        ],
+        "responses": {
+          "200": {
+            "description": "Provider is deleted",
+            "schema": {
+              "$ref": "#/definitions/Provider"
+            }
+          }
+        }
+      }
+    },
+
+    "/clients": {
+
+      "get": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Get all client in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Client"
+            }
+          }
+        }
+      },
+
+      "post": {
+        "tags": [
+          "Clients"
+        ],
+        "description": "Create new client in system",
+        "parameters": [
+          {
+            "name": "client",
+            "in": "body",
+            "description": "Client that we want to create",
+            "schema": {
+              "$ref": "#/definitions/Client"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "New client is created",
+            "schema": {
+              "$ref": "#/definitions/Client"
+            }
+          }
+        }
+      }
+
+    },
+
+    "/clients/{clientId}": {
+
+      "parameters": [
+        {
+          "name": "clientId",
+          "in": "path",
+          "required": true,
+          "description": "ID of client that we want to find",
+          "type": "string"
+        }
+      ],
+
+      "get": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Get client with given ID",
+        "responses": {
+          "200": {
+            "description": "Client is found",
+            "schema": {
+              "$ref": "#/definitions/Client"
+            }
+          }
+        }
+      },
+
+      "put": {
+        "summary": "Update client with give ID",
+        "tags": [
+          "Clients"
+        ],
+        "parameters": [
+          {
+            "name": "client",
+            "in": "body",
+            "description": "Client with new values of properties",
+            "schema": {
+              "$ref": "#/definitions/Client"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Client is updated",
+            "schema": {
+              "$ref": "#/definitions/Client"
+            }
+          }
+        }
+      },
+
+      "delete": {
+        "summary": "Delete client with given ID",
+        "tags": [
+          "Clients"
+        ],
+        "responses": {
+          "200": {
+            "description": "Client is deleted",
+            "schema": {
+              "$ref": "#/definitions/Client"
+            }
+          }
+        }
+      }
+    }
+
+  },
+
+  "definitions": {
+
+    "Client": {
+      "required": [
+        "name",
+        "email",
+        "phone"
+      ],
+
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "phone": {
+          "type": "string"
+        },
+        "providers": {
+          "type": "array",
+          "items": {
+            "type" : "object",
+            "properties": {
+              "_id": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "Provider": {
+      "required": [
+        "name"
+      ],
+
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    }
+
+  }
+}
+
+
+

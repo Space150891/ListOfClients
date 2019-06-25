@@ -112,7 +112,7 @@ module.exports = {
                     });
             });
     },
-    getAllProvider: async function (req, res) {
+    getAllProviders: async function (req, res) {
         Provider
             .find({})
             .sort('name')

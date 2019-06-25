@@ -7,6 +7,6 @@ providerRouter.patch('/:providerId', providerController.updateProvider);
 providerRouter.put('/:providerId', providerController.changeProviderModel);
 providerRouter.delete('/:providerId', providerController.deleteProvider);
 providerRouter.get('/:providerId', providerController.getProvider);
-providerRouter.get('/', providerController.getAllProvider);
+providerRouter.get('/', providerController.getAllProviders);
 
 module.exports = providerRouter;
