@@ -21,7 +21,7 @@ cd frontend && npm install
 ```
 
 ```
-npm run seed
+if your need start data do: npm run seed
 ```
 
 ### Project start
