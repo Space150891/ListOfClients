@@ -56,7 +56,6 @@ export default new Vuex.Store({
         EMIT_NOTIFICATION({commit}, payload) {
             commit("TRIGGER_NOTIFICATION", payload);
         },
-
         CLEAR_NOTIFICATION({commit}) {
             commit("TRIGGER_NOTIFICATION", {
                 message: '',
@@ -68,7 +67,6 @@ export default new Vuex.Store({
         OPEN_MODAL({commit}, payload) {
             commit("TRIGGER_MODAL", payload);
         },
-
         CLOSE_MODAL({commit}) {
             commit("TRIGGER_MODAL", {
                 isProvidersListShow: false,
@@ -78,16 +76,46 @@ export default new Vuex.Store({
             });
         },
 
+        //Providers Actions -------------------------------------------------------------------
         GET_PROVIDERS: async ({commit}) => {
             const response = await Vue.http.get(`providers`);
             await commit("SET_PROVIDERS", response.data.data);
         },
+        CREATE_PROVIDER: async ({dispatch}, payload) => {
+            const response = await Vue.http.post(`providers`, payload);
+            await dispatch("EMIT_NOTIFICATION", {
+                message: response.data.message,
+                status: 'info',
+                trigger: true
+            });
+            await dispatch("GET_PROVIDERS");
+        },
+        UPDATE_PROVIDER: async ({dispatch}, payload) => {
+            const response = await Vue.http.put(`providers/${payload._id}`, payload);
+            await dispatch("EMIT_NOTIFICATION", {
+                message: response.data.message,
+                status: 'info',
+                trigger: true
+            });
+            await dispatch("GET_PROVIDERS");
+            await dispatch("GET_CLIENTS");
+        },
+        DELETE_PROVIDER: async ({dispatch}, payload) => {
+            const response = await Vue.http.delete(`providers/${payload._id}`);
+            await dispatch("EMIT_NOTIFICATION", {
+                message: response.data.message,
+                status: 'info',
+                trigger: true
+            });
+            await dispatch("GET_PROVIDERS");
+            await dispatch("GET_CLIENTS");
+        },
 
+        //Clients Actions -------------------------------------------------------------------
         GET_CLIENTS: async ({commit}) => {
             const response = await Vue.http.get(`clients`);
             await commit("SET_CLIENTS", response.data.data);
         },
-
         CREATE_CLIENT: async ({dispatch}, payload) => {
             const response = await Vue.http.post(`clients`, payload);
             await dispatch("EMIT_NOTIFICATION", {
@@ -98,7 +126,6 @@ export default new Vuex.Store({
             await dispatch('CLOSE_MODAL');
             await dispatch("GET_CLIENTS");
         },
-
         UPDATE_CLIENT: async ({dispatch}, payload) => {
             const response = await Vue.http.put(`clients/${payload._id}`, payload);
             await dispatch("EMIT_NOTIFICATION", {
@@ -109,9 +136,8 @@ export default new Vuex.Store({
             await dispatch('CLOSE_MODAL');
             await dispatch("GET_CLIENTS");
         },
-
         DELETE_CLIENT: async ({dispatch}, payload) => {
-            const response = await Vue.http.delete(`clients/${payload._id}`, payload);
+            const response = await Vue.http.delete(`clients/${payload._id}`);
             await dispatch("EMIT_NOTIFICATION", {
                 message: response.data.message,
                 status: 'info',

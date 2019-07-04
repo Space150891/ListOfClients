@@ -1,6 +1,6 @@
 const Provider = require('../models/Provider.js');
 const mongoose = require('mongoose');
-
+const Client = require('../models/Client.js');
 
 module.exports = {
     createProvider: async function (req, res) {
@@ -77,15 +77,23 @@ module.exports = {
         Provider
             .deleteOne({_id: req.params.providerId})
             .exec()
-            .then(doc => {
-                Provider
-                    .findOne({_id: req.params.providerId})
+            .then(() => {
+                Client
+                    .updateMany({},
+                        {$pull: {providers: req.params.providerId}})
                     .exec()
                     .then(doc => {
                         res
                             .status(200)
-                            .json({message: "Provider deleted successfully", data: doc});
+                            .json({message: "Provider deleted successfully", data: doc[0]});
                     })
+                    .catch(err => {
+                        res
+                            .status(500)
+                            .json({
+                                errors: err.message,
+                            });
+                    });
             })
             .catch(err => {
                 res
@@ -130,6 +138,4 @@ module.exports = {
                     });
             });
     },
-
-
 };

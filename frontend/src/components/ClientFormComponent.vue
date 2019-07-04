@@ -23,27 +23,38 @@
 
                                 <v-flex xs7>
                                     <v-text-field label="Providers"
-                                                  :value="currentProvidersList | providersFilter"
-                                                  required disabled></v-text-field>
+                                                  placeholder="enter provider name or edit exist"
+                                                  v-model="providerNameInput" required>
+                                    </v-text-field>
                                 </v-flex>
 
                                 <v-flex xs5>
-                                    <v-btn style="float: right"
-                                           @click="modalData.isProvidersListShow = !modalData.isProvidersListShow">
-                                        <span> {{  modalData.isEdit ? 'Add or Remove' : 'Add' }}</span>
+                                    <v-btn style="float: right"  @click="saveProvider" :disabled="!providerNameInput">
+                                        <span>{{this.editProviderId ? BUTTON_EDIT_NAME : BUTTON_CREATE_NAME}}</span>
                                     </v-btn>
                                 </v-flex>
 
                                 <v-flex xs7>
-                                    <div v-if="modalData.isProvidersListShow"
-                                         style="border: 1px solid rgba(0,0,0,.42); border-radius: 15px">
-                                        <v-container fluid>
-                                            <v-checkbox
-                                                    v-for="elem in providersList"
-                                                    v-model="elem.isChecked"
-                                                    :key="elem.id"
-                                                    :label="elem.name">
-                                            </v-checkbox>
+                                    <div style="border: 1px solid rgba(0,0,0,.42); border-radius: 15px">
+                                        <v-container fluid v-if="providersList.length">
+                                            <v-layout  v-for="provider in providersList" :key="'providerList' + provider._id">
+
+                                                <v-checkbox v-model="provider.isChecked"
+                                                            :label="provider.name">
+                                                </v-checkbox>
+
+                                                <i class="material-icons custom-button"
+                                                   @click="removeProvider(provider)">
+                                                   delete
+                                                </i>
+
+                                                <i class="material-icons custom-button"
+                                                   :class=" editProviderId === provider._id ? 'color' : ''"
+                                                   @click="editProvider(provider)">
+                                                   edit
+                                                </i>
+
+                                            </v-layout>
                                         </v-container>
                                     </div>
                                 </v-flex>
@@ -71,7 +82,10 @@
         name: "ClientFormComponent",
 
         data: () => ({
-            providersList: [],
+            editProviderId: '',
+            providerNameInput: '',
+            BUTTON_EDIT_NAME: 'edit provider',
+            BUTTON_CREATE_NAME: 'create provider'
         }),
 
         computed: {
@@ -80,51 +94,86 @@
                 modalData: 'getModalData'
             }),
 
-            currentProvidersList() {
-                return this.providersList.filter(item => item.isChecked);
+            providersList(){
+                return this.providers.map(providerItem => {
+                    return {
+                        ...providerItem,
+                        isChecked: this.modalData.model.providers.filter(item => item._id === providerItem._id).length > 0
+                    }
+                });
             }
-        },
 
-        watch: {
-            modalData(modalData) {
-                this.createProvidersList(modalData);
-            }
         },
 
         methods: {
-            createProvidersList(modalData) {
-                this.providersList = this.providers.map(providerItem => {
-                    return {
-                        ...providerItem,
-                        isChecked: modalData.model.providers.filter(item => item._id === providerItem._id).length > 0
-                    }
-                });
-            },
 
             save() {
                 this.modalData.model.providers = this.providersList.filter(item => item.isChecked).map(item => ({_id: item._id}));
                 this.modalData.isEdit ? this.update() : this.create();
             },
-
             update() {
                 this.$store.dispatch("UPDATE_CLIENT", this.modalData.model);
+                this.clearComponentData();
             },
-
             create() {
                 if (!this.modalData.isEdit) delete this.modalData.model._id;
                 this.$store.dispatch("CREATE_CLIENT", this.modalData.model);
+                this.clearComponentData();
             },
-
             remove() {
                 this.$store.dispatch('DELETE_CLIENT', this.modalData.model);
+                this.clearComponentData();
+            },
+
+            saveProvider(){
+                this.editProviderId
+                    ?
+                    this.$store.dispatch('UPDATE_PROVIDER', {name: this.providerNameInput, _id:this.editProviderId})
+                    :
+                    this.$store.dispatch('CREATE_PROVIDER', {name: this.providerNameInput});
+
+                this.clearComponentData();
+            },
+            removeProvider(currentProvider){
+                this.$store.dispatch('DELETE_PROVIDER', currentProvider);
+                this.clearComponentData();
+            },
+            editProvider(currentProvider){
+
+                if (this.editProviderId === currentProvider._id ) {
+                    this.editProviderId = '';
+                    this.providerNameInput = '';
+                } else {
+                    this.editProviderId = currentProvider._id;
+                    this.providerNameInput = currentProvider.name;
+                }
+            },
+
+            clearComponentData(){
+                this.providerNameInput = '';
+                this.editProviderId = '';
             }
 
         }
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
     .v-input--selection-controls {
         margin: 0;
+    }
+    .custom-button {
+        padding-left: 10px;
+        padding-right: 20px;
+        height: 30px;
+        cursor: pointer;
+
+        &:hover {
+            color: #4097f3;
+        }
+    }
+
+    .color {
+        color: red;
     }
 </style>
